@@ -93,7 +93,7 @@ export default function Home() {
 						How it Works
 					</h1>
 
-					<div className="grid grid-cols-3 gap-8 mt-8">
+					<div className="flex flex-col gap-8 mt-8 sm:flex-row">
 						<div className="flex flex-col items-center">
 							<Image
 								src="/images/web-design.svg"
@@ -102,12 +102,13 @@ export default function Home() {
 								width={300}
 								className="mx-auto "
 							></Image>
+
 							<div className="flex flex-row items-center">
 								<div className="flex items-center justify-center w-8 h-8 text-white bg-orange-500 rounded-md">
 									1
 								</div>
 								<div className="ml-4 text-lg font-semibold ">
-									Search for your Book
+									Search for your book
 								</div>
 							</div>
 
@@ -146,16 +147,17 @@ export default function Home() {
 								height={300}
 								width={300}
 							></Image>
+
 							<div className="flex flex-row items-center">
 								<div className="flex items-center justify-center w-8 h-8 text-white bg-orange-500 rounded-md">
 									3
 								</div>
 								<div className="ml-4 text-lg font-semibold">
-									Download your summary
+									View your summary
 								</div>
 							</div>
 							<div className="mt-2 text-sm text-center text-gray-600">
-								Download the summary and start studying!
+								View the summary and start studying!
 							</div>
 						</div>
 					</div>
@@ -181,26 +183,26 @@ export default function Home() {
 				</div>
 
 				<div className="mt-16">
-					<div className="grid grid-cols-2">
-						<div className="flex flex-col items-end justify-center">
-							<h1 className="flex justify-center font-sans text-4xl font-bold">
+					<div className="flex flex-col sm:flex-row sm:gap-x-6 gap-x-0">
+						<div className="flex flex-col justify-center gap-y-2 sm:items-end">
+							<h1 className="flex justify-center font-sans text-4xl font-bold text-center sm:text-end">
 								Free, easy to use, and no ads.
 							</h1>
 
-							<div className="mt-2 text-lg text-gray-900 text-end">
+							<div className="text-lg text-center text-gray-900 sm:text-end">
 								With Balladeer, you can get the gist of the book
 								in minutes instead of hours. You can also use
 								Balladeer to summarize your notes and lectures.
 							</div>
-							<p>
-								<a
-									href="#"
-									className="mt-2 text-lg font-semibold text-orange-500"
-								>
-									Get Started &rarr;
-								</a>
-							</p>
+
+							<a
+								href="#"
+								className="mt-2 ml-auto text-lg font-semibold text-orange-500 sm:ml-0"
+							>
+								Get Started &rarr;
+							</a>
 						</div>
+
 						<Image
 							src="/images/surreal-flying-bulbs.svg"
 							className="mx-auto"
