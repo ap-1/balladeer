@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { observable } from "@legendapp/state";
+import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
 import Image from "next/image";
@@ -9,30 +10,41 @@ import { Content } from "@/components/content";
 
 export const revalidate = 0;
 
-async function getData() {
-	try {
-		const res = await fetch("/api/call", {
+const state = observable({ message: "" });
+
+export default function Home() {
+	const message = useSelector(() => state.message.get());
+
+	const generate = async () => {
+		const response = await fetch("/api/queryLLM", {
 			method: "POST",
-			body: JSON.stringify({
-				product: "computers",
-			}),
+			body: JSON.stringify({ input: "computers" }),
 		});
 
-		if (!res.body) {
-			throw new Error("No response body");
+		const stream = response.body;
+
+		if (!stream) {
+			return console.error("Could not access stream");
 		}
 
-		const reader = res.body.getReader();
-		const chunks = [];
+		const reader = stream.getReader();
 
-		while (true) {
-			const chunk = await reader.read();
+		try {
+			const decoder = new TextDecoder();
 
-			if (chunk.done) {
-				break;
+			while (true) {
+				const { done, value } = await reader.read();
+
+				if (done) {
+					break;
+				}
+
+				state.message.set((prev) => prev + decoder.decode(value));
 			}
-
-			chunks.push(chunk.value);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			reader.releaseLock();
 		}
 
 		return chunks.join("");
