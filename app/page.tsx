@@ -5,9 +5,11 @@ import { observable } from "@legendapp/state";
 import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
-import { Send } from "lucide-react";
 import { Content } from "@/components/content";
 import { Input } from "@/components/ui/input";
+
+import { Send, BookMarked } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const revalidate = 0;
 
@@ -55,51 +57,34 @@ export default function Home() {
 			<Content as="main" className="py-8 ">
 				<div className="grid grid-cols-2">
 					<div className="flex items-center max-w-lg">
-						<div>
+						<div className="flex flex-col gap-y-3">
 							<h1 className="font-black text-6xl font-sans">
 								Studying just got smarter.
 							</h1>
-							<h2 className="mt-4 text-xl">
+							<h2 className="text-xl">
 								Create concise and insightful book summaries in
 								minutes with AI-powered text summarization.
 							</h2>
 
-							<div className="flex flex-row items-center relative mt-6 bg-white dark:bg-gray-700 border border-gray-300 rounded-md overflow-hidden">
-								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none py-2 ">
-									<svg
-										className="h-5 w-5 text-gray-400"
-										viewBox="0 0 20 20"
-										fill="currentColor"
-									>
-										<path
-											fill-rule="evenodd"
-											d="M9 2a7 7 0 1 0 0 14A7 7 0 0 0 9 2zM1 9a8 8 0 1 1 16 0A8 8 0 0 1 1 9zm2 0a6 6 0 1 1 12 0A6 6 0 0 1 3 9z"
-											clip-rule="evenodd"
-										/>
-									</svg>
-								</div>
-
+							<div className="flex w-full max-w-sm items-center space-x-2 mt-3">
+								<BookMarked className="w-10 h-10" />
 								<Input
 									type="text"
 									placeholder="Summarize a book right now!"
-									className="w-full pl-10 pr-4"
 								/>
-
-								<div className="bg-orange-400 px-3 py-2" onClick={generate}>
-									<Send />
-								</div>
-
-								{message}
+								<Button type="submit" onClick={generate}>
+									<Send className="w-5 h-5" />
+								</Button>
 							</div>
 						</div>
 					</div>
 
 					<Image
 						src="/images/student-going-to-school.svg"
-						alt="schoolgirl"
-						height={400}
-						width={400}
-						className=" mx-auto"
+						alt="student-going-to-school"
+						className="mx-auto h-[400px] w-[400px]"
+						height={960}
+						width={960}
 					></Image>
 				</div>
 
