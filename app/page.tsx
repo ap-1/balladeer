@@ -66,7 +66,7 @@ export default function Home() {
 								minutes with AI-powered text summarization.
 							</h2>
 
-							<div className="flex items-center w-full max-w-sm mt-3 space-x-2">
+							<div className="flex items-center w-full max-w-sm mt-3 space-x-2 bg-muted rounded-md p-2">
 								<BookMarked className="w-10 h-10" />
 								<Input
 									type="text"
@@ -161,16 +161,16 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className="mt-16 bg-gray-200">
+				<div className="mt-16 bg-secondary">
 					<div className="px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
 						<div className="text-center">
 							<h2 className="text-base font-semibold tracking-wide text-orange-600 uppercase">
 								AI-powered text summarization
 							</h2>
-							<p className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+							<p className="mt-1 text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl">
 								Try it out now!
 							</p>
-							<p className="max-w-xl mx-auto mt-5 text-xl text-gray-500">
+							<p className="max-w-xl mx-auto mt-5 text-xl ">
 								Improve your studying experience and
 								productivity workflow with our AI-powered text
 								summarization. With Balladeer, you can get the
@@ -187,7 +187,7 @@ export default function Home() {
 								Free, easy to use, and no ads.
 							</h1>
 
-							<div className="mt-2 text-lg text-gray-900 text-end">
+							<div className="mt-2 text-lg text-end">
 								With Balladeer, you can get the gist of the book
 								in minutes instead of hours. You can also use
 								Balladeer to summarize your notes and lectures.
