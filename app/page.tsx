@@ -186,7 +186,7 @@ export default function Home() {
 
 			<Content
 				as="section"
-				className="flex flex-col sm:flex-row sm:gap-x-6 gap-x-0"
+				className="flex flex-col mt-16 sm:mt-0 sm:flex-row sm:gap-x-6 gap-x-0"
 			>
 				<div className="flex flex-col justify-center gap-y-2 sm:items-end">
 					<h1 className="flex justify-center font-sans text-4xl font-bold text-center sm:text-end">
