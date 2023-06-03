@@ -12,11 +12,6 @@ const satoshi = localFont({
 	variable: "--font-satoshi",
 });
 
-const stardom = localFont({
-	src: "../fonts/Stardom-Regular.woff2",
-	variable: "--font-stardom",
-});
-
 export const metadata = {
 	title: "Balladeer",
 	description: "balladeer",
@@ -26,19 +21,8 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<ClerkProvider>
 			<html lang="en" suppressHydrationWarning>
-				<body
-					className={cn(
-						satoshi.variable,
-						stardom.variable,
-						"font-sans antialiased"
-					)}
-				>
-					<ThemeProvider
-						fontVariables={{
-							"--font-satoshi": satoshi.variable,
-							"--font-stardom": stardom.variable,
-						}}
-					>
+				<body className={cn(satoshi.variable, "font-sans antialiased")}>
+					<ThemeProvider fontVariable={satoshi.variable}>
 						{children}
 					</ThemeProvider>
 				</body>

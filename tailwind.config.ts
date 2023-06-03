@@ -18,8 +18,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ["--font-satoshi", ...fontFamily.sans],
-				serif: ["--font-stardom", ...fontFamily.serif],
+				sans: ["var(--font-satoshi)", ...fontFamily.sans],
 			},
 			colors: {
 				border: "hsl(var(--border))",

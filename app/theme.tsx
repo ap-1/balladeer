@@ -1,27 +1,16 @@
 "use client";
 
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { useMemo, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 interface ThemeProviderProps {
-	fontVariables: Record<string, string>;
+	fontVariable: string;
 }
 
 export const ThemeProvider = ({
 	children,
-	fontVariables,
+	fontVariable,
 }: PropsWithChildren<ThemeProviderProps>) => {
-	const fontStyles = useMemo(
-		() => `
-			:root {
-				${Object.entries(fontVariables)
-					.map((key, value) => `${key}: ${value};`)
-					.join("\n")}
-			}
-		`,
-		[fontVariables]
-	);
-
 	return (
 		<NextThemesProvider
 			enableSystem
@@ -30,7 +19,11 @@ export const ThemeProvider = ({
 			enableColorScheme={false}
 		>
 			<style jsx global>
-				{fontStyles}
+				{`
+					:root {
+						--font-satoshi: ${fontVariable};
+					}
+				`}
 			</style>
 
 			{children}
