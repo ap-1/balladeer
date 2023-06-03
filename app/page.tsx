@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { observable } from "@legendapp/state";
 import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
-import Image from "next/image";
 import { Send } from "lucide-react";
 import { Content } from "@/components/content";
+import { Input } from "@/components/ui/input";
 
 export const revalidate = 0;
 
@@ -46,15 +47,7 @@ export default function Home() {
 		} finally {
 			reader.releaseLock();
 		}
-
-		return chunks.join("");
-	} catch (e) {
-		console.log(e);
-	}
-}
-
-export default function Home() {
-	useEffect(() => void getData().then(console.log).catch(console.error));
+	};
 
 	return (
 		<>
@@ -70,6 +63,7 @@ export default function Home() {
 								Create concise and insightful book summaries in
 								minutes with AI-powered text summarization.
 							</h2>
+
 							<div className="flex flex-row items-center relative mt-6 bg-white dark:bg-gray-700 border border-gray-300 rounded-md overflow-hidden">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none py-2 ">
 									<svg
@@ -84,17 +78,22 @@ export default function Home() {
 										/>
 									</svg>
 								</div>
-								<input
+
+								<Input
 									type="text"
 									placeholder="Summarize a book right now!"
-									className="w-full pl-10 pr-4 focus:outline-none focus:border-blue-500 py-2 "
+									className="w-full pl-10 pr-4"
 								/>
-								<div className="bg-orange-400 px-3 py-2">
+
+								<div className="bg-orange-400 px-3 py-2" onClick={generate}>
 									<Send />
 								</div>
+
+								{message}
 							</div>
 						</div>
 					</div>
+
 					<Image
 						src="/images/student-going-to-school.svg"
 						alt="schoolgirl"
@@ -103,10 +102,12 @@ export default function Home() {
 						className=" mx-auto"
 					></Image>
 				</div>
+
 				<div className="mt-16">
 					<h1 className="font-black text-4xl font-sans">
 						How it works
 					</h1>
+
 					<div className="mt-8 grid grid-cols-3 gap-8">
 						<div className="flex flex-col items-center">
 							<div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
