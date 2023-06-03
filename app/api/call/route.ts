@@ -5,24 +5,24 @@ import { PromptTemplate } from "langchain/prompts";
 import { OpenAI } from "langchain/llms/openai";
 import { LLMChain } from "langchain/chains";
 
-import { RedisCache } from "langchain/cache/redis";
-import { createClient } from "redis";
+// import { RedisCache } from "langchain/cache/redis";
+// import { createClient } from "redis";
 import { env } from "@/env.mjs";
 
 import { NextResponse, type NextRequest } from "next/server";
 
-const client = createClient({
-	url: env.UPSTASH_REDIS_REST_URL,
-});
+// const client = createClient({
+// 	url: env.UPSTASH_REDIS_REST_URL,
+// });
 
-client
-	.connect()
-	.then(() => console.log("Redis client connected"))
-	.catch(console.error);
+// client
+// 	.connect()
+// 	.then(() => console.log("Redis client connected"))
+// 	.catch(console.error);
 
 const model = new OpenAI({
 	streaming: true,
-	cache: new RedisCache(client),
+	// cache: new RedisCache(client),
 	openAIApiKey: env.OPENAI_API_KEY,
 });
 
