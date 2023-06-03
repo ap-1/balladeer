@@ -1,4 +1,4 @@
-import { Home } from "lucide-react";
+import { Home, Github, Package } from "lucide-react";
 
 export const pages = [
 	{
@@ -6,5 +6,18 @@ export const pages = [
 		href: "/",
 		protected: false,
 		Icon: Home,
+	},
+] as const;
+
+export const links = [
+	{
+		title: "GitHub",
+		href: "https://github.com/ap-1/balladeer",
+		Icon: Github,
+	},
+	{
+		title: "Devpost",
+		href: "https://devpost.com/software/balladeer",
+		Icon: Package,
 	},
 ] as const;

@@ -13,7 +13,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 
-const themes = [
+export const themes = [
 	{
 		name: "Light",
 		value: "light",
@@ -31,7 +31,7 @@ const themes = [
 	},
 ] as const;
 
-const state = observable({ mounted: false });
+const state = observable({ mounted: false, open: false });
 
 export const ThemeSwitcher = () => {
 	const { resolvedTheme, setTheme } = useTheme();
@@ -43,28 +43,39 @@ export const ThemeSwitcher = () => {
 
 	const isMounted = useSelector(() => state.mounted.get());
 	const themeIcon = isMounted ? (
-		<currentTheme.Icon className="h-5 w-5" />
+		<currentTheme.Icon className="w-5 h-5" />
 	) : (
-		<Loader2 className="h-5 w-5 animate-spin" />
+		<Loader2 className="w-5 h-5 animate-spin" />
 	);
 
+	const isOpen = useSelector(() => state.open.get());
+	const onSelection = (theme: (typeof themes)[number]["value"]) => {
+		return () => {
+			setTheme(theme);
+			state.open.set(false);
+		};
+	};
+
 	return (
-		<Popover>
+		<Popover open={isOpen} onOpenChange={state.open.set}>
 			<PopoverTrigger asChild>
 				<Button variant="outline" className="px-2">
 					{themeIcon}
 				</Button>
 			</PopoverTrigger>
 
-			<PopoverContent align="end" className="flex flex-col gap-y-1 p-1 w-30">
+			<PopoverContent
+				align="end"
+				className="flex flex-col p-1 gap-y-1 w-30"
+			>
 				{themes.map((theme) => (
 					<Button
 						variant="ghost"
 						key={theme.value}
 						className="flex flex-row justify-start gap-2"
-						onClick={() => setTheme(theme.value)}
+						onClick={onSelection(theme.value)}
 					>
-						<theme.Icon className="h-4 w-4 my-auto" />
+						<theme.Icon className="w-4 h-4 my-auto" />
 						{theme.name}
 					</Button>
 				))}
