@@ -56,7 +56,7 @@ export default function Home() {
 			<Navbar currentTitle="Home" />
 			<Content
 				as="heading"
-				className="flex flex-col gap-3 my-16 sm:gap-0 sm:flex-row"
+				className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-16 sm:gap-0"
 			>
 				<div className="flex items-center max-w-lg">
 					<div className="flex flex-col gap-y-3">
@@ -98,7 +98,7 @@ export default function Home() {
 					How it Works
 				</h1>
 
-				<div className="flex flex-col gap-8 mt-8 sm:flex-row">
+				<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-8 ">
 					<div className="flex flex-col items-center">
 						<Image
 							src="/images/web-design.svg"
@@ -188,7 +188,7 @@ export default function Home() {
 
 			<Content
 				as="section"
-				className="flex flex-col mt-16 sm:flex-row sm:gap-x-6 gap-x-0"
+				className="grid grid-cols-1 sm:grid-cols-2 mt-16 sm:gap-x-2 gap-x-0"
 			>
 				<div className="flex flex-col justify-center gap-y-2 sm:items-end">
 					<h1 className="flex justify-center font-sans text-4xl font-bold text-center sm:text-end">
