@@ -85,7 +85,10 @@ export default function Home() {
 									className="w-full pl-10 pr-4"
 								/>
 
-								<div className="bg-orange-400 px-3 py-2" onClick={generate}>
+								<div
+									className="bg-orange-400 px-3 py-2"
+									onClick={generate}
+								>
 									<Send />
 								</div>
 
@@ -103,30 +106,49 @@ export default function Home() {
 					></Image>
 				</div>
 
-				<div className="mt-16">
-					<h1 className="font-black text-4xl font-sans">
-						How it works
+				<div className="mt-16 ">
+					<h1 className="flex justify-center font-black mx-auto text-4xl font-sans">
+						How it Works
 					</h1>
 
 					<div className="mt-8 grid grid-cols-3 gap-8">
 						<div className="flex flex-col items-center">
-							<div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-								1
+							<Image
+								src="/images/web-design.svg"
+								alt="search"
+								height={300}
+								width={300}
+								className=" mx-auto"
+							></Image>
+							<div className="flex flex-row items-center">
+								<div className="flex items-center justify-center h-8 w-8 rounded-md bg-orange-500 text-white">
+									1
+								</div>
+								<div className=" ml-4 text-lg font-semibold">
+									Search for your Book
+								</div>
 							</div>
-							<div className="mt-4 text-lg font-semibold">
-								Upload your book
-							</div>
+
 							<div className="mt-2 text-center text-sm text-gray-600">
-								Upload your book in PDF format to our website.
+								Search for the book you want to summarize.
 							</div>
 						</div>
 
 						<div className="flex flex-col items-center">
-							<div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-								2
-							</div>
-							<div className="mt-4 text-lg font-semibold">
-								Wait for the magic
+							<Image
+								src="/images/surreal-hourglass.svg"
+								alt="wait"
+								height={300}
+								width={300}
+								className=" mx-auto"
+							></Image>
+							<div className="flex flex-row items-center">
+								<div className="flex items-center justify-center h-8 w-8 rounded-md bg-orange-500 text-white">
+									2
+								</div>
+								<div className="ml-4 text-lg font-semibold">
+									Wait for the magic
+								</div>
 							</div>
 							<div className="mt-2 text-center text-sm text-gray-600">
 								Our AI will summarize the book for you.
@@ -134,11 +156,20 @@ export default function Home() {
 						</div>
 
 						<div className="flex flex-col items-center">
-							<div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-								3
-							</div>
-							<div className="mt-4 text-lg font-semibold">
-								Download your summary
+							<Image
+								src="/images/work-from-home.svg"
+								alt="study"
+								height={300}
+								width={300}
+								className=" mx-auto"
+							></Image>
+							<div className="flex flex-row items-center">
+								<div className="flex items-center justify-center h-8 w-8 rounded-md bg-orange-500 text-white">
+									3
+								</div>
+								<div className="ml-4 text-lg font-semibold">
+									Download your summary
+								</div>
 							</div>
 							<div className="mt-2 text-center text-sm text-gray-600">
 								Download the summary and start studying!
@@ -147,21 +178,53 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className="bg-gray-200">
+				<div className="bg-gray-200 mt-16">
 					<div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
 						<div className="text-center">
 							<h2 className="text-base font-semibold text-orange-600 tracking-wide uppercase">
-								AI powered text summarization
+								AI-powered text summarization
 							</h2>
 							<p className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-								Our customers love us
+								Try it out now!
 							</p>
 							<p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elit. Possimus magnam voluptatum
-								commodi, minima, eligendi dolorum.
+								Improve your studying experience and
+								productivity workflow with our AI-powered text
+								summarization. With Balladeer, you can get the
+								gist of the book in minutes instead of hours.
 							</p>
 						</div>
+					</div>
+				</div>
+
+				<div className="mt-16">
+					<div className="grid grid-cols-2">
+						<div className="flex flex-col items-end justify-center">
+							<h1 className="flex justify-center font-bold text-4xl font-sans">
+								Free, easy to use, and no ads.
+							</h1>
+
+							<div className="mt-2 text-end text-lg text-gray-900">
+								With Balladeer, you can get the gist of the book
+								in minutes instead of hours. You can also use
+								Balladeer to summarize your notes and lectures.
+							</div>
+							<p>
+								<a
+									href="#"
+									className="mt-2 text-lg font-semibold text-orange-500"
+								>
+									Get Started &rarr;
+								</a>
+							</p>
+						</div>
+						<Image
+							src="/images/surreal-flying-bulbs.svg"
+							alt="study"
+							height={300}
+							width={300}
+							className=" mx-auto"
+						></Image>
 					</div>
 				</div>
 			</Content>
