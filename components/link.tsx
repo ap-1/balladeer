@@ -23,7 +23,11 @@ export const Link = (props: PropsWithChildren<LinkProps>) => {
 
 	return (
 		<NextLink
-			className={cn(noUnderline || "underline", className)}
+			className={cn(
+				"hover:text-orange-500 dark:hover:text-sky-500 transition-colors",
+				noUnderline || "underline",
+				className
+			)}
 			target={target}
 			{...rest}
 		/>
