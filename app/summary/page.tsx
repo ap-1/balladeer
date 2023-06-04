@@ -17,16 +17,28 @@ import { useSelector } from "@legendapp/state/react";
 import { Character } from "@/components/chat/character";
 import { Questions } from "@/components/chat/q&a";
 import { Devices } from "@/components/chat/devices";
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
-const state = observable({ message: "" });
+export default function Book() {
+	const searchParams = useSearchParams();
 
-export default function Chat() {
-	const message = useSelector(() => state.message.get());
+	const title = searchParams?.get("title");
+	const author = searchParams?.get("author");
+	const year = searchParams?.get("year");
+	const pages = searchParams?.get("pages");
+	const subjects = searchParams?.get("subjects");
 
-	const generate = async () => {
-		const response = await fetch("/api/queryLLM", {
+	const [result, setResult] = useState("");
+	const [summary, setSummary] = useState("");
+	const [characters, setCharacters] = useState("");
+	const [devices, setDevices] = useState("");
+	const [questionsAndAnswers, setQuestionsAndAnswers] = useState("");
+
+	const generate = async (prompt: string) => {
+		const response = await fetch("/api/converse", {
 			method: "POST",
-			body: JSON.stringify({ input: "computers" }),
+			body: JSON.stringify({ input: prompt }),
 		});
 
 		const stream = response.body;
@@ -47,18 +59,79 @@ export default function Chat() {
 					break;
 				}
 
-				state.message.set((prev) => prev + decoder.decode(value));
+				setResult((result) => result + decoder.decode(value));
 			}
+			const parsedResult = JSON.parse(result);
+
+			const summary = parsedResult.summary;
+			console.log("Summary:", summary);
+
+			const characters = parsedResult.characters;
+			console.log("Characters:", characters);
+
+			const devices = parsedResult.devices;
+			console.log("Devices:", devices);
+
+			const questionsAndAnswers = parsedResult["Q&A"];
+			console.log("Questions and Answers:", questionsAndAnswers);
 		} catch (error) {
 			console.error(error);
 		} finally {
+			console.log("finished");
 			reader.releaseLock();
 		}
 	};
 
+	useEffect(() => {
+		generate(
+			"Title: " +
+				title +
+				",Author: " +
+				author +
+				",Year: " +
+				year +
+				",Pages: " +
+				pages +
+				",Subjects: " +
+				subjects
+		);
+	}, []);
+
+	useEffect(() => {
+		const resultSections = result.split("\n\n"); // Split the result string at each double line break
+
+		// Find the index of each section marker
+		const summaryIndex = resultSections.findIndex((section) =>
+			section.includes("SUMMARY:")
+		);
+		const charactersIndex = resultSections.findIndex((section) =>
+			section.includes("RESPONSE:")
+		);
+		const devicesIndex = resultSections.findIndex((section) =>
+			section.includes("DEVICES:")
+		);
+		const qaIndex = resultSections.findIndex((section) =>
+			section.includes("Q&A:")
+		);
+
+		// Extract the text between each section marker
+		const summaryText = resultSections
+			.slice(summaryIndex + 1, charactersIndex)
+			.join("\n");
+		const charactersText = resultSections
+			.slice(charactersIndex + 1, devicesIndex)
+			.join("\n");
+		const devicesText = resultSections
+			.slice(devicesIndex + 1, qaIndex)
+			.join("\n");
+		const qaText = resultSections.slice(qaIndex + 1).join("\n");
+
+		console.log("Summary:", summaryText);
+		setSummary(summaryText);
+	}, [result]);
 	return (
 		<>
-			<Navbar currentTitle="Chat" />
+			<Navbar currentTitle="Home" />
 			<Content
 				as="section"
 				className="relative flex justify-center px-4 py-8 mx-auto overflow-hidden text-center max-w-7xl sm:px-0"
@@ -66,38 +139,39 @@ export default function Chat() {
 			>
 				<div className="relative z-10 dark:text-white text-primary">
 					<p className="mt-1 text-4xl font-extrabold text-white dark:text-primary sm:text-5xl sm:tracking-tight lg:text-6xl">
-						Hamlet
+						{title}
 					</p>
 					<p className="max-w-lg px-4 py-2 mt-4 text-base font-semibold tracking-wide text-white uppercase border-2 border-white rounded-md dark:text-primary">
-						&ldquo;Who&apos;s there?&rdquo;
+						{subjects}
+						{result}
 					</p>
 				</div>
 			</Content>
 
 			<section className="flex flex-row flex-wrap items-center justify-around text-lg border-b border-border">
-				<Link href="/chat#summary" className="flex-grow">
+				<a href="#summary" className="flex-grow">
 					<button className="w-full h-full px-5 py-4 duration-150 hover:bg-secondary">
 						Summary
 					</button>
-				</Link>
+				</a>
 
-				<Link href="/chat#characters" className="flex-grow">
+				<a href="#characters" className="flex-grow">
 					<button className="w-full h-full px-5 py-4 duration-150 hover:bg-secondary">
 						Characters
 					</button>
-				</Link>
+				</a>
 
-				<Link href="/chat#devices" className="flex-grow">
+				<a href="#devices" className="flex-grow">
 					<button className="w-full h-full px-5 py-4 duration-150 hover:bg-secondary">
 						Devices
 					</button>
-				</Link>
+				</a>
 
-				<Link href="/chat#q&a" className="flex-grow">
+				<a href="#q&a" className="flex-grow">
 					<button className="w-full h-full px-5 py-4 duration-150 hover:bg-secondary">
 						Q&A
 					</button>
-				</Link>
+				</a>
 			</section>
 
 			<Content
@@ -108,28 +182,28 @@ export default function Chat() {
 			>
 				<div className="flex items-center gap-2 mb-4 text-xl font-semibold">
 					<BarChartHorizontal />
-					Hamlet Overview
+					{title} Overview
 				</div>
 
 				<div className="flex flex-row flex-wrap justify-between gap-4">
 					<div className="flex flex-col">
 						<div className="font-semibold">Name:</div>
-						<div>Hamlet</div>
+						<div>{title}</div>
 					</div>
 
 					<div className="flex flex-col">
 						<div className="font-semibold">Published Year:</div>
-						<div>1603</div>
+						<div>{year}</div>
 					</div>
 
 					<div className="flex flex-col">
 						<div className="font-semibold">Number of Pages:</div>
-						<div>304</div>
+						<div>{pages}</div>
 					</div>
 
 					<div className="flex flex-col">
 						<div className="font-semibold">Author:</div>
-						<div>William Shakespeare</div>
+						<div>{author}</div>
 					</div>
 				</div>
 			</Content>
@@ -144,12 +218,7 @@ export default function Chat() {
 					<Album />
 					Summary
 				</div>
-				First performed around 1600, Hamlet tells the story of a prince
-				whose duty to revenge his father’s death entangles him in
-				philosophical problems he can’t solve. Shakespeare’s best-known
-				play is widely regarded as the most influential literary work
-				ever written. Read a character analysis of Hamlet, plot summary,
-				and important quotes.
+				{summary}
 			</Content>
 
 			<Content
@@ -195,28 +264,28 @@ export default function Chat() {
 						{
 							type: "Alliteration",
 							reference:
-								"I will speak daggers to her, but use none.",
+								"I will speak daggers to her, butvxc use none.",
 							description:
 								"Hamlet uses alliteration to emphasize his anger towards his mother.",
 						},
 						{
 							type: "Alliteration",
 							reference:
-								"I will speak daggers to her, but use none.",
+								"I will speak daggevcxrs to her, but use none.",
 							description:
 								"Hamlet uses alliteration to emphasize his anger towards his mother.",
 						},
 						{
 							type: "Alliteration",
 							reference:
-								"I will speak daggers to her, but use none.",
+								"I will speak daggers to vcxher, but use none.",
 							description:
 								"Hamlet uses alliteration to emphasize his anger towards his mother.",
 						},
 						{
 							type: "Alliteration",
 							reference:
-								"I will speak daggers to her, but use none.",
+								"I will speak dagvdcxgers to her, but use none.",
 							description:
 								"Hamlet uses alliteration to emphasize his anger towards his mother.",
 						},
