@@ -6,6 +6,7 @@ import { useSelector } from "@legendapp/state/react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { Link } from "@/components/link";
+import Image from "next/image";
 import { Content } from "@/components/content";
 import { SignInButton } from "@/components/signIn";
 import { Button } from "@/components/ui/button";
@@ -52,10 +53,24 @@ export const Navbar = ({ currentTitle }: NavbarProps) => {
 			<div className="flex justify-between">
 				<div className="flex flex-row gap-x-8">
 					<Link
-						className="py-4 text-2xl font-bold"
+						className="py-4 text-2xl font-bold flex flex-row gap-x-1 items-center"
 						noUnderline
 						href="/"
 					>
+						<Image
+							src="/images/robinhood.png"
+							alt="Balladeer logo"
+							width={50}
+							height={50}
+							className="fill-light dark:hidden"
+						/>
+						<Image
+							src="/images/robinhood.png"
+							alt="Balladeer logo"
+							width={50}
+							height={50}
+							className="fill-dark dark:inline hidden"
+						/>
 						Balladeer
 					</Link>
 

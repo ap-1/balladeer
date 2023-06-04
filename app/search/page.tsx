@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { observable } from "@legendapp/state";
@@ -11,6 +13,7 @@ import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
+
 import {
 	Check,
 	CheckCheck,
@@ -70,6 +73,9 @@ const state = observable({ data: [] as Doc[], searching: false });
 export default function Search() {
 	const data = useSelector(() => state.data.get());
 	const searching = useSelector(() => state.searching.get());
+	const searchParams = useSearchParams();
+
+	const searchMessage = searchParams?.get("search");
 
 	const form = useForm<Schema>({
 		resolver: zodResolver(FormSchema),
@@ -109,13 +115,32 @@ export default function Search() {
 		);
 	};
 
+	//search for the book if the search query is in the url
+	useEffect(() => {
+		if (searchMessage) {
+			setTimeout(() => form.setValue("search", searchMessage), 0);
+			search(searchMessage);
+		}
+	}, [form, searchMessage]);
+
+	const HandleSubmit = ({
+		title,
+		author,
+		year,
+		pages,
+		subjects,
+	}: {
+		title: string;
+		author: string;
+		year: string;
+		pages: string;
+		subjects: string;
+	}) => {};
+
 	return (
 		<>
 			<Navbar currentTitle="Search" />
-			<Content
-				as="header"
-				className="py-16"
-			>
+			<Content as="header" className="py-16">
 				<h1 className="pb-4 text-4xl font-extrabold">
 					Search for a book
 				</h1>
@@ -230,7 +255,7 @@ export default function Search() {
 
 								<Button
 									variant="outline"
-									className="h-12 my-auto hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
+									className="h-12 ml-1 my-auto hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
 								>
 									{j === 0 ? (
 										<CheckCheck className="w-4 h-4" />

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { observable } from "@legendapp/state";
 import { useSelector } from "@legendapp/state/react";
 
@@ -11,11 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { useState } from "react";
+
 export const revalidate = 0;
 
 const state = observable({ message: "" });
 
 export default function Home() {
+	const [search, setSearch] = useState("");
 	const message = useSelector(() => state.message.get());
 
 	const generate = async () => {
@@ -72,10 +76,19 @@ export default function Home() {
 							<Input
 								type="text"
 								placeholder="Summarize a book right now!"
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
 							/>
-							<Button type="submit" onClick={generate}>
-								<Search className="w-5 h-5" />
-							</Button>
+							<Link
+								href={{
+									pathname: "/search",
+									query: { search: search },
+								}}
+							>
+								<Button type="submit" onClick={generate}>
+									<Search className="w-5 h-5" />
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -202,7 +215,7 @@ export default function Home() {
 					</div>
 
 					<a
-						href="#"
+						href="/search"
 						className="mt-2 ml-auto text-lg font-semibold text-orange-500 dark:text-sky-500 sm:ml-0"
 					>
 						Get Started &rarr;
