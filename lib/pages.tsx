@@ -1,4 +1,4 @@
-import { Home, BookMarked, BookOpen, Github, Package } from "lucide-react";
+import { Home, BookMarked, Github, Package } from "lucide-react";
 
 export const pages = [
 	{
@@ -12,12 +12,6 @@ export const pages = [
 		href: "/search",
 		protected: false,
 		Icon: BookMarked,
-	},
-	{
-		title: "Chat",
-		href: "/chat",
-		protected: true,
-		Icon: BookOpen,
 	},
 ] as const;
 
