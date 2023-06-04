@@ -1,9 +1,11 @@
 "use client";
 
 import { z } from "zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { observable } from "@legendapp/state";
+import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
@@ -25,10 +27,10 @@ import {
 interface Doc {
 	title: string;
 	first_publish_year: number;
-	number_of_pages_median: number;
+	number_of_pages_median?: number;
 	first_sentence: string[];
 	author_name: string[];
-	subject: string[];
+	subject?: string[];
 }
 
 const fetchResults = async (search: string, page: number): Promise<Doc[]> => {
@@ -43,44 +45,56 @@ const fetchResults = async (search: string, page: number): Promise<Doc[]> => {
 	if (numFound === 0) {
 		return [];
 	} else {
-		const end = Math.min(page * 10, numFound - 1);
+		const end = Math.min(page * 5, numFound - 1);
 
-		return data.docs.slice((page - 1) * 10, end);
+		return data.docs.slice((page - 1) * 5, end);
 	}
 };
 
 const FormSchema = z.object({
-	search: z.string().min(1),
+	search: z.string().nonempty("Please enter the name of a book"),
 });
 
 type Schema = z.infer<typeof FormSchema>;
 
-export default async function Search() {
-	const [data, setData] = useState<Doc[]>([]);
+const state = observable({ data: [] as Doc[] });
+
+export default function Search() {
+	const data = useSelector(() => state.data.get());
 
 	const form = useForm<Schema>({
 		resolver: zodResolver(FormSchema),
 		defaultValues: { search: "" },
 	});
 
-	const onSubmit = (data: Schema) =>
-		fetchResults(data.search, 1).then(setData).catch(console.error);
+	const search = (query: string) => {
+		state.data.set([]);
+		fetchResults(query, 1)
+			.then((data) => state.data.set(data))
+			.catch(console.error);
+	};
+
+	const Sample = ({ title }: { title: string }) => {
+		return (
+			<Button variant="outline" onClick={() => search(title)}>
+				{title}
+			</Button>
+		)
+	}
 
 	return (
 		<>
 			<Navbar currentTitle="Search" />
-			<Content
-				as="header"
-				className="py-16"
-				outerClassName="bg-orange-500 dark:bg-sky-500 "
-			>
+			<Content as="header" className="py-16">
 				<h1 className="pb-4 text-4xl font-extrabold">
 					Search for a book
 				</h1>
 
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit(onSubmit)}
+						onSubmit={form.handleSubmit((data: Schema) =>
+							search(data.search)
+						)}
 						className="flex items-center w-full space-x-2"
 					>
 						<FormField
@@ -90,13 +104,13 @@ export default async function Search() {
 								<FormItem className="flex-grow">
 									<FormControl>
 										<Input
-											className="h-14 bg-secondary"
+											className="h-14"
 											placeholder="What book are you searching for?"
 											{...field}
 										/>
 									</FormControl>
 
-									<FormDescription className="dark:text-white">
+									<FormDescription>
 										Make sure to search for the book name
 										and not the author.
 									</FormDescription>
@@ -110,6 +124,19 @@ export default async function Search() {
 						</Button>
 					</form>
 				</Form>
+
+				<div className="mt-8">
+					<h2 className="mb-4 text-2xl font-bold">Samples</h2>
+
+					<div className="flex flex-wrap gap-2">
+						<Sample title="The Great Gatsby" />
+						<Sample title="Animal Farm" />
+						<Sample title="The Catcher in the Rye" />
+						<Sample title="Hamlet" />
+						<Sample title="To Kill a Mockingbird" />
+						<Sample title="1984" />
+					</div>
+				</div>
 			</Content>
 
 			<Content
@@ -119,11 +146,37 @@ export default async function Search() {
 			>
 				<h2 className="mb-4 text-2xl font-bold">Search results</h2>
 
-				<ScrollArea className="w-full p-4 border rounded-md h-72">
+				<ScrollArea className="w-full px-6 pt-6 border rounded-md h-72">
 					{data.map((doc, j) => (
 						<div key={j}>
-							{doc.title}
-							<Separator className="my-2" />
+							<div className="flex flex-row justify-between">
+								<p>
+									{doc.title}, {doc.author_name[0]} (
+									{doc.first_publish_year})
+								</p>
+								<p>
+									{doc.number_of_pages_median ?? "unknown"}{" "}
+									pages
+								</p>
+							</div>
+
+							<div>
+								{doc.subject
+									?.slice(0, 10)
+									.map((subject, k, { length }) => (
+										<span
+											key={k}
+											className="text-muted-foreground"
+										>
+											{subject}{" "}
+											{k + 1 < length && (
+												<span>&middot; </span>
+											)}
+										</span>
+									))}
+							</div>
+
+							<Separator className="my-4" />
 						</div>
 					))}
 				</ScrollArea>
