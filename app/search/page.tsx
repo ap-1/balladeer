@@ -9,7 +9,12 @@ import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
-import { Loader2, Library, Search as LucideSearchIcon } from "lucide-react";
+import {
+	Check,
+	Loader2,
+	Library,
+	Search as LucideSearchIcon,
+} from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -94,6 +99,7 @@ export default function Search() {
 				variant="outline"
 				disabled={searching}
 				onClick={() => search(title)}
+				className="hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
 			>
 				{title}
 			</Button>
@@ -103,10 +109,7 @@ export default function Search() {
 	return (
 		<>
 			<Navbar currentTitle="Search" />
-			<Content
-				as="header"
-				className="py-16"
-			>
+			<Content as="header" className="py-16">
 				<h1 className="pb-4 text-4xl font-extrabold">
 					Search for a book
 				</h1>
@@ -159,7 +162,7 @@ export default function Search() {
 						<Sample title="The Catcher in the Rye" />
 						<Sample title="Hamlet" />
 						<Sample title="To Kill a Mockingbird" />
-						<Sample title="1984" />
+						<Sample title="The Crucible" />
 					</div>
 				</div>
 			</Content>
@@ -174,34 +177,45 @@ export default function Search() {
 					{resultsIcon}
 				</h2>
 
-				<ScrollArea className="w-full px-6 pt-6 border rounded-md h-72">
+				<ScrollArea className="w-full px-6 pt-6 border rounded-md h-80">
 					{data.map((doc, j) => (
 						<div key={j}>
-							<div className="flex flex-row justify-between">
-								<p>
-									{doc.title}, {doc.author_name[0]} (
-									{doc.first_publish_year})
-								</p>
-								<p>
-									{doc.number_of_pages_median ?? "unknown"}{" "}
-									pages
-								</p>
-							</div>
+							<div className="flex flex-row justify-between gap-6">
+								<div className="flex-grow">
+									<div className="flex flex-row justify-between">
+										<p>
+											{doc.title}, {doc.author_name[0]} (
+											{doc.first_publish_year})
+										</p>
+										<p>
+											{doc.number_of_pages_median ??
+												"unknown"}{" "}
+											pages
+										</p>
+									</div>
 
-							<div>
-								{doc.subject
-									?.slice(0, 10)
-									.map((subject, k, { length }) => (
-										<span
-											key={k}
-											className="text-muted-foreground"
-										>
-											{subject}{" "}
-											{k + 1 < length && (
-												<span>&middot; </span>
-											)}
-										</span>
-									))}
+									<div className="text-muted-foreground">
+										{doc.subject
+											?.slice(0, 10)
+											.map((subject, k, { length }) => (
+												<span key={k}>
+													{subject}{" "}
+													{k + 1 < length && (
+														<span>&middot; </span>
+													)}
+												</span>
+											)) ?? (
+											<span>unknown categories</span>
+										)}
+									</div>
+								</div>
+
+								<Button
+									variant="outline"
+									className="h-12 my-auto hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
+								>
+									<Check className="w-4 h-4" />
+								</Button>
 							</div>
 
 							<Separator className="my-4" />
