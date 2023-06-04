@@ -52,9 +52,18 @@ dependencies:
   cmdk:
     specifier: ^0.2.0
     version: 0.2.0(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0)
+  embla-carousel-auto-height:
+    specifier: 8.0.0-rc06
+    version: 8.0.0-rc06(embla-carousel@8.0.0-rc06)
+  embla-carousel-autoplay:
+    specifier: 8.0.0-rc06
+    version: 8.0.0-rc06(embla-carousel@8.0.0-rc06)
   embla-carousel-react:
     specifier: 8.0.0-rc06
     version: 8.0.0-rc06(react@18.2.0)
+  embla-carousel-wheel-gestures:
+    specifier: 8.0.0-rc04
+    version: 8.0.0-rc04(embla-carousel@8.0.0-rc06)
   langchain:
     specifier: ^0.0.90
     version: 0.0.90(@upstash/redis@1.21.0)(redis@4.6.7)
@@ -2216,6 +2225,22 @@ packages:
     resolution: {integrity: sha512-jdie3RiEgygvDTyS2sgjq71B36q2cDSBfPlwzUyuOrfYTNoYWyBxxjGJV/HAu3A2hB0Y+HesvCVkVAFoCKwCSw==}
     dev: false
 
+  /embla-carousel-auto-height@8.0.0-rc06(embla-carousel@8.0.0-rc06):
+    resolution: {integrity: sha512-cvCWd5oGZ/vn8dWkk88yFIDgDSEBAZklCyI5azVRMwMm9GKVa116YiScpAO9l1zmEzAC/A5eKhQtmXDAJKY78A==}
+    peerDependencies:
+      embla-carousel: 8.0.0-rc06
+    dependencies:
+      embla-carousel: 8.0.0-rc06
+    dev: false
+
+  /embla-carousel-autoplay@8.0.0-rc06(embla-carousel@8.0.0-rc06):
+    resolution: {integrity: sha512-EuEFy7Nf+esJndP+4P1O5t0dEsMDEIGuQXcjAlhBvUia7nZ402O5BqwcKxH1vkS8+D1Y0GyovuUsRjGtyiZtXA==}
+    peerDependencies:
+      embla-carousel: 8.0.0-rc06
+    dependencies:
+      embla-carousel: 8.0.0-rc06
+    dev: false
+
   /embla-carousel-react@8.0.0-rc06(react@18.2.0):
     resolution: {integrity: sha512-aZfVqTptCA6uq3VLPFXLKGSkxVdoiNjQa1sjVOJc+9FL6pbwImaVR0oL7jA0kfW9l67XoQOEOq1gRiImbYr/Ew==}
     peerDependencies:
@@ -2232,6 +2257,16 @@ packages:
       embla-carousel: 8.0.0-rc06
     dependencies:
       embla-carousel: 8.0.0-rc06
+    dev: false
+
+  /embla-carousel-wheel-gestures@8.0.0-rc04(embla-carousel@8.0.0-rc06):
+    resolution: {integrity: sha512-Rkyhixlyako1L99zKMOyl9cuBE5B/NT8/Cy0KgoinzaBALz9me5gx49U2uWMA6pnqYUIvY3iIOkJqovLP/kYFA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      embla-carousel: 8.0.0-rc03
+    dependencies:
+      embla-carousel: 8.0.0-rc06
+      wheel-gestures: 2.2.5
     dev: false
 
   /embla-carousel@8.0.0-rc06:
@@ -5061,6 +5096,11 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
+    dev: false
+
+  /wheel-gestures@2.2.5:
+    resolution: {integrity: sha512-01BlXRjBVt5Gy0VH2rRqMeccHruTGq2Gd1fx0UqCPN8KDeDCmlTXsRGc/hXJk6W+wnO9CNJp2xfntMNRArBxKQ==}
+    engines: {node: '>=10'}
     dev: false
 
   /which-boxed-primitive@1.0.2:
