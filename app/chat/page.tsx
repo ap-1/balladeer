@@ -10,7 +10,7 @@ import { Character } from "@/components/chat/character";
 import { Questions } from "@/components/chat/q&a";
 import { Devices } from "@/components/chat/devices";
 import { Input } from "@/components/ui/input";
-import { Album, Users, Feather } from "lucide-react";
+import { Album, Users, Feather, BarChartHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -26,8 +26,8 @@ export default function Home() {
 					<p className="mt-1 text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl">
 						Hamlet
 					</p>
-					<p className="p-2 mt-4 text-base font-semibold tracking-wide uppercase border-2 border-orange-900 rounded-md dark:border-orange-100">
-						William Shakespeare
+					<p className="p-2 mt-4 max-w-lg text-base font-semibold tracking-wide uppercase border-2 border-orange-900 rounded-md dark:border-orange-100">
+						{'"Who\'s there?"'}
 					</p>
 				</div>
 			</Content>
@@ -58,6 +58,37 @@ export default function Home() {
 					</button>
 				</a>
 			</Content>
+
+			<Content
+				as="section"
+				className="relative flex flex-col px-4 py-8 text-lg max-w-7xl "
+				outerClassName="border-b border-border"
+				id="stats"
+			>
+				<div className="font-semibold text-xl flex items-center gap-2 mb-2">
+					<BarChartHorizontal />
+					Hamlet Overview:
+				</div>
+				<div className="grid grid-cols-4 gap-4">
+					<div className="flex flex-col ">
+						<div className="font-semibold">Name:</div>
+						<div>Hamlet</div>
+					</div>
+					<div className="flex flex-col ">
+						<div className="font-semibold">Published Year:</div>
+						<div>1603</div>
+					</div>
+					<div className="flex flex-col ">
+						<div className="font-semibold">Number of Pages:</div>
+						<div>304</div>
+					</div>
+					<div className="flex flex-col ">
+						<div className="font-semibold">Author:</div>
+						<div>William Shakespeare</div>
+					</div>
+				</div>
+			</Content>
+
 			<Content
 				as="section"
 				className="relative flex flex-col px-4 py-8 text-lg max-w-7xl "
@@ -119,6 +150,27 @@ export default function Home() {
 							description:
 								"Hamlet uses alliteration to emphasize his anger towards his mother.",
 						},
+						{
+							type: "Alliteration",
+							reference:
+								"I will speak daggers to her, but use none.",
+							description:
+								"Hamlet uses alliteration to emphasize his anger towards his mother.",
+						},
+						{
+							type: "Alliteration",
+							reference:
+								"I will speak daggers to her, but use none.",
+							description:
+								"Hamlet uses alliteration to emphasize his anger towards his mother.",
+						},
+						{
+							type: "Alliteration",
+							reference:
+								"I will speak daggers to her, but use none.",
+							description:
+								"Hamlet uses alliteration to emphasize his anger towards his mother.",
+						},
 					]}
 				/>
 			</Content>
@@ -136,6 +188,26 @@ export default function Home() {
 					questions={[
 						{
 							question: "What is the meaning of life?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 2?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 3?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 4?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 5?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 6?",
 							answer: "42",
 						},
 					]}
