@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +13,7 @@ import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import {
 	Check,
+	CheckCheck,
 	Loader2,
 	Library,
 	Search as LucideSearchIcon,
@@ -109,61 +112,76 @@ export default function Search() {
 	return (
 		<>
 			<Navbar currentTitle="Search" />
-			<Content as="header" className="py-16">
+			<Content
+				as="header"
+				className="py-16"
+			>
 				<h1 className="pb-4 text-4xl font-extrabold">
 					Search for a book
 				</h1>
 
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit((data: Schema) =>
-							search(data.search)
-						)}
-						className="flex items-center w-full space-x-2"
-					>
-						<FormField
-							control={form.control}
-							name="search"
-							render={({ field }) => (
-								<FormItem className="flex-grow">
-									<FormControl>
-										<Input
-											className="h-14"
-											placeholder="What book are you searching for?"
-											{...field}
-										/>
-									</FormControl>
+				<div className="flex flex-col gap-8 sm:flex-row">
+					<div>
+						<Form {...form}>
+							<form
+								onSubmit={form.handleSubmit((data: Schema) =>
+									search(data.search)
+								)}
+								className="flex items-center w-full space-x-2"
+							>
+								<FormField
+									control={form.control}
+									name="search"
+									render={({ field }) => (
+										<FormItem className="flex-grow">
+											<FormControl>
+												<Input
+													className="h-14"
+													placeholder="What book are you searching for?"
+													{...field}
+												/>
+											</FormControl>
 
-									<FormDescription>
-										Make sure to search for the book name
-										and not the author.
-									</FormDescription>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+											<FormDescription>
+												Make sure to search for the book
+												name and not the author.
+											</FormDescription>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 
-						<Button
-							type="submit"
-							disabled={searching}
-							className="mb-auto h-14"
-						>
-							{searchIcon}
-						</Button>
-					</form>
-				</Form>
+								<Button
+									type="submit"
+									disabled={searching}
+									className="mb-auto h-14"
+								>
+									{searchIcon}
+								</Button>
+							</form>
+						</Form>
 
-				<div className="mt-8">
-					<h2 className="mb-4 text-2xl font-bold">Samples</h2>
+						<div className="mt-8">
+							<h2 className="mb-4 text-2xl font-bold">Samples</h2>
 
-					<div className="flex flex-wrap gap-2">
-						<Sample title="The Great Gatsby" />
-						<Sample title="Animal Farm" />
-						<Sample title="The Catcher in the Rye" />
-						<Sample title="Hamlet" />
-						<Sample title="To Kill a Mockingbird" />
-						<Sample title="The Crucible" />
+							<div className="flex flex-wrap gap-2">
+								<Sample title="The Great Gatsby" />
+								<Sample title="Animal Farm" />
+								<Sample title="The Catcher in the Rye" />
+								<Sample title="Hamlet" />
+								<Sample title="To Kill a Mockingbird" />
+								<Sample title="The Crucible" />
+							</div>
+						</div>
 					</div>
+
+					<Image
+						src="/images/searching-location-on-the-phone.svg"
+						alt="searching-location-on-the-phone"
+						className="mx-auto dark:invert"
+						width={300}
+						height={300}
+					/>
 				</div>
 			</Content>
 
@@ -214,7 +232,11 @@ export default function Search() {
 									variant="outline"
 									className="h-12 my-auto hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
 								>
-									<Check className="w-4 h-4" />
+									{j === 0 ? (
+										<CheckCheck className="w-4 h-4" />
+									) : (
+										<Check className="w-4 h-4" />
+									)}
 								</Button>
 							</div>
 
