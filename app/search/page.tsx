@@ -60,7 +60,7 @@ export default async function Search() {
 
 	const form = useForm<Schema>({
 		resolver: zodResolver(FormSchema),
-		defaultValues: { search: "The Great Gatsby" },
+		defaultValues: { search: "" },
 	});
 
 	const onSubmit = (data: Schema) => (
