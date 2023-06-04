@@ -63,14 +63,17 @@ export default async function Search() {
 		defaultValues: { search: "" },
 	});
 
-	const onSubmit = (data: Schema) => (
-		fetchResults(data.search, 1).then(setData).catch(console.error)
-	);
+	const onSubmit = (data: Schema) =>
+		fetchResults(data.search, 1).then(setData).catch(console.error);
 
 	return (
 		<>
 			<Navbar currentTitle="Search" />
-			<Content as="header" className="py-16">
+			<Content
+				as="header"
+				className="py-16"
+				outerClassName="bg-orange-500 dark:bg-sky-500 "
+			>
 				<h1 className="pb-4 text-4xl font-extrabold">
 					Search for a book
 				</h1>
@@ -87,13 +90,13 @@ export default async function Search() {
 								<FormItem className="flex-grow">
 									<FormControl>
 										<Input
-											className="h-14"
+											className="h-14 bg-secondary"
 											placeholder="What book are you searching for?"
 											{...field}
 										/>
 									</FormControl>
 
-									<FormDescription>
+									<FormDescription className="dark:text-white">
 										Make sure to search for the book name
 										and not the author.
 									</FormDescription>
