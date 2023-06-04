@@ -1,22 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import { observable } from "@legendapp/state";
-import { useSelector } from "@legendapp/state/react";
-
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import { Character } from "@/components/chat/character";
 import { Questions } from "@/components/chat/q&a";
 import { Devices } from "@/components/chat/devices";
-import { Input } from "@/components/ui/input";
 import { Album, Users, Feather, BarChartHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function Home() {
 	return (
 		<>
-			<Navbar currentTitle="Home" />
+			<Navbar currentTitle="Chat" />
 			<Content
 				as="section"
 				className="relative flex justify-center px-4 py-8 mx-auto overflow-hidden text-center max-w-7xl sm:px-0"
@@ -26,11 +20,12 @@ export default function Home() {
 					<p className="mt-1 text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl">
 						Hamlet
 					</p>
-					<p className="p-2 mt-4 max-w-lg text-base font-semibold tracking-wide uppercase border-2 border-orange-900 rounded-md dark:border-orange-100">
+					<p className="max-w-lg p-2 mt-4 text-base font-semibold tracking-wide uppercase border-2 border-orange-900 rounded-md dark:border-orange-100">
 						{'"Who\'s there?"'}
 					</p>
 				</div>
 			</Content>
+
 			<Content
 				as="section"
 				className="relative flex flex-row items-center px-4 text-lg max-w-7xl "
@@ -65,10 +60,11 @@ export default function Home() {
 				outerClassName="border-b border-border"
 				id="stats"
 			>
-				<div className="font-semibold text-xl flex items-center gap-2 mb-2">
+				<div className="flex items-center gap-2 mb-2 text-xl font-semibold">
 					<BarChartHorizontal />
 					Hamlet Overview:
 				</div>
+
 				<div className="grid grid-cols-4 gap-4">
 					<div className="flex flex-col ">
 						<div className="font-semibold">Name:</div>
@@ -95,7 +91,7 @@ export default function Home() {
 				outerClassName="border-b border-border"
 				id="summary"
 			>
-				<div className="font-semibold text-xl flex items-center gap-2 mb-2">
+				<div className="flex items-center gap-2 mb-2 text-xl font-semibold">
 					<Album />
 					Summary:
 				</div>
@@ -106,16 +102,18 @@ export default function Home() {
 				ever written. Read a character analysis of Hamlet, plot summary,
 				and important quotes.
 			</Content>
+
 			<Content
 				as="section"
 				className="relative flex flex-col px-4 py-8 text-lg max-w-7xl "
 				outerClassName="border-b border-border"
 				id="characters"
 			>
-				<div className="font-semibold text-xl flex items-center gap-2 mb-2">
+				<div className="flex items-center gap-2 mb-2 text-xl font-semibold">
 					<Users />
 					Characters:
 				</div>
+
 				<Character
 					characters={[
 						{
@@ -131,16 +129,18 @@ export default function Home() {
 					]}
 				/>
 			</Content>
+
 			<Content
 				as="section"
 				className="relative flex flex-col px-4 py-8 text-lg max-w-7xl "
 				outerClassName="border-b border-border"
 				id="devices"
 			>
-				<div className="font-semibold text-xl flex items-center gap-2 mb-2">
+				<div className="flex items-center gap-2 mb-2 text-xl font-semibold">
 					<Feather />
 					Literary Devices:
 				</div>
+
 				<Devices
 					devices={[
 						{
@@ -174,16 +174,17 @@ export default function Home() {
 					]}
 				/>
 			</Content>
+
 			<Content
 				as="section"
-				className="relative flex flex-col px-4 py-8 text-lg max-w-7xl "
-				outerClassName="border-b border-border"
+				className="relative flex flex-col px-4 pt-8 text-lg max-w-7xl"
 				id="q&a"
 			>
-				<div className="font-semibold text-xl flex items-center gap-2 mb-2">
+				<div className="flex items-center gap-2 mb-2 text-xl font-semibold">
 					<Feather />
 					Q&A
 				</div>
+
 				<Questions
 					questions={[
 						{

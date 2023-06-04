@@ -7,7 +7,7 @@ export const Footer = () => {
 		<Content
 			as="footer"
 			className="flex flex-row justify-between py-8 text-muted-foreground"
-			outerClassName="bg-secondary mt-16"
+			outerClassName="bg-secondary mt-8"
 		>
 			<div className="my-auto">
 				Developed by{" "}

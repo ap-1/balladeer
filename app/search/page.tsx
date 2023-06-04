@@ -111,7 +111,7 @@ export default async function Search() {
 
 			<Content
 				as="main"
-				className="pt-16"
+				className="pt-8"
 				outerClassName="border-t border-border"
 			>
 				<h2 className="mb-4 text-2xl font-bold">Search results</h2>
