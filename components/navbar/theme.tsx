@@ -58,8 +58,8 @@ export const ThemeSwitcher = () => {
 
 	return (
 		<Popover open={isOpen} onOpenChange={state.open.set}>
-			<PopoverTrigger asChild>
-				<Button variant="outline" className="px-2">
+			<PopoverTrigger>
+				<Button variant="outline" className="px-2 mt-auto">
 					{themeIcon}
 				</Button>
 			</PopoverTrigger>

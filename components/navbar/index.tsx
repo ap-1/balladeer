@@ -65,7 +65,7 @@ export const Navbar = ({ currentTitle }: NavbarProps) => {
 					/>
 				</div>
 
-				<div className="my-auto md:flex md:flex-row md:gap-x-2">
+				<div className="h-10 my-auto md:flex md:flex-row md:gap-x-2">
 					<div className="hidden md:block">
 						<Search />
 					</div>
@@ -79,7 +79,7 @@ export const Navbar = ({ currentTitle }: NavbarProps) => {
 
 					<Button
 						variant="outline"
-						className="px-2 ml-2 md:ml-0 lg:hidden"
+						className="px-2 mb-[12px] ml-2 md:ml-0 lg:hidden"
 						asChild
 					>
 						<MenuIcon
