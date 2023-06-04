@@ -6,13 +6,13 @@ import { LLMChain } from "langchain/chains";
 // import { RedisCache } from "langchain/cache/redis";
 // import { createClient } from "redis";
 
-import { z } from "zod";
 import { env } from "@/env.mjs";
+import { z } from "zod";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // const client = createClient({
-// 	url: env.UPSTASH_REDIS_REST_URL,
+// 	url: env.UPSTASH_REDIS_URL,
 // });
 
 // client
@@ -29,17 +29,19 @@ const schema = z.object({
 	input: z.string().min(1),
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
 	try {
 		const body = JSON.parse(req.body);
 		const query = schema.safeParse(body);
 
 		if (!query.success) {
 			return res.status(400).json({
-				error: {
-					message: "Invalid request",
-					errors: query.error,
-				},
+				status: "error",
+				message: "Invalid request",
+				errors: query.error,
 			});
 		}
 
@@ -69,6 +71,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	} catch (error: any) {
 		console.error(error);
 
-		res.status(500).send(`Internal server error: ${error.message}`);
+		res.status(500).json({
+			status: "error",
+			message: `Internal server error: ${error}`,
+		});
 	}
 }
