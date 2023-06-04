@@ -150,6 +150,27 @@ export default function Home() {
 							description:
 								"Hamlet uses alliteration to emphasize his anger towards his mother.",
 						},
+						{
+							type: "Alliteration",
+							reference:
+								"I will speak daggers to her, but use none.",
+							description:
+								"Hamlet uses alliteration to emphasize his anger towards his mother.",
+						},
+						{
+							type: "Alliteration",
+							reference:
+								"I will speak daggers to her, but use none.",
+							description:
+								"Hamlet uses alliteration to emphasize his anger towards his mother.",
+						},
+						{
+							type: "Alliteration",
+							reference:
+								"I will speak daggers to her, but use none.",
+							description:
+								"Hamlet uses alliteration to emphasize his anger towards his mother.",
+						},
 					]}
 				/>
 			</Content>
@@ -167,6 +188,26 @@ export default function Home() {
 					questions={[
 						{
 							question: "What is the meaning of life?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 2?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 3?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 4?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 5?",
+							answer: "42",
+						},
+						{
+							question: "What is the meaning of life 6?",
 							answer: "42",
 						},
 					]}
