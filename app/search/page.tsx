@@ -9,7 +9,7 @@ import { useSelector } from "@legendapp/state/react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
-import { Search as SearchIcon } from "lucide-react";
+import { Loader2, Library, Search as LucideSearchIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -57,10 +57,11 @@ const FormSchema = z.object({
 
 type Schema = z.infer<typeof FormSchema>;
 
-const state = observable({ data: [] as Doc[] });
+const state = observable({ data: [] as Doc[], searching: false });
 
 export default function Search() {
 	const data = useSelector(() => state.data.get());
+	const searching = useSelector(() => state.searching.get());
 
 	const form = useForm<Schema>({
 		resolver: zodResolver(FormSchema),
@@ -68,24 +69,44 @@ export default function Search() {
 	});
 
 	const search = (query: string) => {
-		state.data.set([]);
+		state.searching.set(true);
 		fetchResults(query, 1)
 			.then((data) => state.data.set(data))
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => state.searching.set(false));
 	};
+
+	const searchIcon = searching ? (
+		<Loader2 className="w-7 h-7 animate-spin" />
+	) : (
+		<LucideSearchIcon className="w-7 h-7" />
+	);
+
+	const resultsIcon = searching ? (
+		<Loader2 className="w-6 h-6 my-auto animate-spin" />
+	) : (
+		<Library className="w-6 h-6 my-auto" />
+	);
 
 	const Sample = ({ title }: { title: string }) => {
 		return (
-			<Button variant="outline" onClick={() => search(title)}>
+			<Button
+				variant="outline"
+				disabled={searching}
+				onClick={() => search(title)}
+			>
 				{title}
 			</Button>
-		)
-	}
+		);
+	};
 
 	return (
 		<>
 			<Navbar currentTitle="Search" />
-			<Content as="header" className="py-16">
+			<Content
+				as="header"
+				className="py-16"
+			>
 				<h1 className="pb-4 text-4xl font-extrabold">
 					Search for a book
 				</h1>
@@ -119,8 +140,12 @@ export default function Search() {
 							)}
 						/>
 
-						<Button type="submit" className="mb-auto h-14">
-							<SearchIcon className="w-7 h-7" />
+						<Button
+							type="submit"
+							disabled={searching}
+							className="mb-auto h-14"
+						>
+							{searchIcon}
 						</Button>
 					</form>
 				</Form>
@@ -144,7 +169,10 @@ export default function Search() {
 				className="pt-8"
 				outerClassName="border-t border-border"
 			>
-				<h2 className="mb-4 text-2xl font-bold">Search results</h2>
+				<h2 className="flex flex-row gap-2 mb-4 text-2xl font-bold">
+					Search results
+					{resultsIcon}
+				</h2>
 
 				<ScrollArea className="w-full px-6 pt-6 border rounded-md h-72">
 					{data.map((doc, j) => (
