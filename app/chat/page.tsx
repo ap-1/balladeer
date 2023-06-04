@@ -11,11 +11,51 @@ import {
 	Lightbulb,
 } from "lucide-react";
 
+import { observable } from "@legendapp/state";
+import { useSelector } from "@legendapp/state/react";
+
 import { Character } from "@/components/chat/character";
 import { Questions } from "@/components/chat/q&a";
 import { Devices } from "@/components/chat/devices";
 
-export default function Home() {
+const state = observable({ message: "" });
+
+export default function Chat() {
+	const message = useSelector(() => state.message.get());
+
+	const generate = async () => {
+		const response = await fetch("/api/queryLLM", {
+			method: "POST",
+			body: JSON.stringify({ input: "computers" }),
+		});
+
+		const stream = response.body;
+
+		if (!stream) {
+			return console.error("Could not access stream");
+		}
+
+		const reader = stream.getReader();
+
+		try {
+			const decoder = new TextDecoder();
+
+			while (true) {
+				const { done, value } = await reader.read();
+
+				if (done) {
+					break;
+				}
+
+				state.message.set((prev) => prev + decoder.decode(value));
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			reader.releaseLock();
+		}
+	};
+
 	return (
 		<>
 			<Navbar currentTitle="Chat" />
