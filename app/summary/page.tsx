@@ -1,6 +1,7 @@
 "use client";
 
-import { Link } from "@/components/link";
+import { useState, useEffect, type SetStateAction, type Dispatch } from "react";
+
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import {
@@ -11,14 +12,10 @@ import {
 	Lightbulb,
 } from "lucide-react";
 
-import { observable } from "@legendapp/state";
-import { useSelector } from "@legendapp/state/react";
-
 import { Character } from "@/components/chat/character";
 import { Questions } from "@/components/chat/q&a";
 import { Devices } from "@/components/chat/devices";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
 
 export default function Book() {
 	const searchParams = useSearchParams();
@@ -28,17 +25,21 @@ export default function Book() {
 	const year = searchParams?.get("year");
 	const pages = searchParams?.get("pages");
 	const subjects = searchParams?.get("subjects");
+	const characters = searchParams?.get("characters");
+	const firstSentence = searchParams?.get("firstSentence");
 
-	const [result, setResult] = useState("");
 	const [summary, setSummary] = useState("");
-	const [characters, setCharacters] = useState("");
+	const [characterInfo, setCharacterInfo] = useState<string[]>([]);
 	const [devices, setDevices] = useState("");
 	const [questionsAndAnswers, setQuestionsAndAnswers] = useState("");
 
-	const generate = async (prompt: string) => {
+	const generate = async (
+		question: string,
+		setter: Dispatch<SetStateAction<string>>
+	) => {
 		const response = await fetch("/api/converse", {
 			method: "POST",
-			body: JSON.stringify({ input: prompt }),
+			body: JSON.stringify({ input: question }),
 		});
 
 		const stream = response.body;
@@ -59,76 +60,22 @@ export default function Book() {
 					break;
 				}
 
-				setResult((result) => result + decoder.decode(value));
+				setter((prev) => prev + decoder.decode(value));
 			}
-			const parsedResult = JSON.parse(result);
-
-			const summary = parsedResult.summary;
-			console.log("Summary:", summary);
-
-			const characters = parsedResult.characters;
-			console.log("Characters:", characters);
-
-			const devices = parsedResult.devices;
-			console.log("Devices:", devices);
-
-			const questionsAndAnswers = parsedResult["Q&A"];
-			console.log("Questions and Answers:", questionsAndAnswers);
 		} catch (error) {
 			console.error(error);
 		} finally {
-			console.log("finished");
 			reader.releaseLock();
 		}
 	};
 
 	useEffect(() => {
 		generate(
-			"Title: " +
-				title +
-				",Author: " +
-				author +
-				",Year: " +
-				year +
-				",Pages: " +
-				pages +
-				",Subjects: " +
-				subjects
+			`Give me a short summary (~4 sentences) of the novel ${title} by ${author} (${year})`,
+			setSummary
 		);
-	}, []);
+	}, [author, title, year]);
 
-	useEffect(() => {
-		const resultSections = result.split("\n\n"); // Split the result string at each double line break
-
-		// Find the index of each section marker
-		const summaryIndex = resultSections.findIndex((section) =>
-			section.includes("SUMMARY:")
-		);
-		const charactersIndex = resultSections.findIndex((section) =>
-			section.includes("RESPONSE:")
-		);
-		const devicesIndex = resultSections.findIndex((section) =>
-			section.includes("DEVICES:")
-		);
-		const qaIndex = resultSections.findIndex((section) =>
-			section.includes("Q&A:")
-		);
-
-		// Extract the text between each section marker
-		const summaryText = resultSections
-			.slice(summaryIndex + 1, charactersIndex)
-			.join("\n");
-		const charactersText = resultSections
-			.slice(charactersIndex + 1, devicesIndex)
-			.join("\n");
-		const devicesText = resultSections
-			.slice(devicesIndex + 1, qaIndex)
-			.join("\n");
-		const qaText = resultSections.slice(qaIndex + 1).join("\n");
-
-		console.log("Summary:", summaryText);
-		setSummary(summaryText);
-	}, [result]);
 	return (
 		<>
 			<Navbar currentTitle="Home" />
@@ -142,8 +89,7 @@ export default function Book() {
 						{title}
 					</p>
 					<p className="max-w-lg px-4 py-2 mt-4 text-base font-semibold tracking-wide text-white uppercase border-2 border-white rounded-md dark:text-primary">
-						{subjects}
-						{result}
+						&ldquo;{firstSentence}&rdquo;
 					</p>
 				</div>
 			</Content>

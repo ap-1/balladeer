@@ -40,9 +40,10 @@ interface Doc {
 	title: string;
 	first_publish_year: number;
 	number_of_pages_median?: number;
-	first_sentence: string[];
+	person_facet: string[];
 	author_name: string[];
 	subject?: string[];
+	first_sentence: string[];
 }
 
 const fetchResults = async (search: string, page: number): Promise<Doc[]> => {
@@ -116,27 +117,13 @@ export default function Search() {
 		);
 	};
 
-	//search for the book if the search query is in the url
+	// search for the book if the search query is in the url
 	useEffect(() => {
 		if (searchMessage) {
 			setTimeout(() => form.setValue("search", searchMessage), 0);
 			search(searchMessage);
 		}
 	}, [form, searchMessage]);
-
-	const HandleSubmit = ({
-		title,
-		author,
-		year,
-		pages,
-		subjects,
-	}: {
-		title: string;
-		author: string;
-		year: string;
-		pages: string;
-		subjects: string;
-	}) => {};
 
 	return (
 		<>
@@ -262,6 +249,10 @@ export default function Search() {
 											year: doc.first_publish_year,
 											pages: doc.number_of_pages_median,
 											subjects: doc.subject,
+											characters: doc.person_facet,
+											firstSentence:
+												doc.first_sentence?.at(0) ??
+												doc.subject,
 										},
 									}}
 								>
