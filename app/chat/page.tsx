@@ -18,7 +18,7 @@ import { Devices } from "@/components/chat/devices";
 export default function Home() {
 	return (
 		<>
-			<Navbar currentTitle="Chat" />
+			<Navbar currentTitle="Home" />
 			<Content
 				as="section"
 				className="relative flex justify-center px-4 py-8 mx-auto overflow-hidden text-center max-w-7xl sm:px-0"
