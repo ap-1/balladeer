@@ -8,7 +8,7 @@ import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import { Input } from "@/components/ui/input";
 
-import { Send, BookMarked } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const revalidate = 0;
@@ -74,7 +74,7 @@ export default function Home() {
 								placeholder="Summarize a book right now!"
 							/>
 							<Button type="submit" onClick={generate}>
-								<BookMarked className="w-5 h-5" />
+								<Search className="w-5 h-5" />
 							</Button>
 						</div>
 					</div>
