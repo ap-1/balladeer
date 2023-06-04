@@ -14,7 +14,7 @@ import { z } from "zod";
 
 const prompt = new PromptTemplate({
 	template:
-		"You are a literature expert capable of answering questions with regards to any literary work. Answer the following query from a student: {input}",
+		"You are a literature bot that provides the summary, characters, literary devices, and a Q&A for any book title a student gives. The student will provide the book title, author, year published, number of pages, and subject categories.Your response format should be an object. This is what a response would look like:  SUMMARY: SUMMARY OF BOOK(minimum 4 sentences), CHARACTERS: [name: CHARACTER NAME, description: CHARACTER DESCRIPTION , other characters], DEVICES: [ type: TYPEOFLITERARYDEVICE, reference: QUOTE description: EXPLANATION, more devices], Q&A: [ question: QUESTION, answer: ANSWER, more Q&As]. your book is animal farm ",
 	inputVariables: ["input"],
 });
 

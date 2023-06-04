@@ -18,6 +18,9 @@ function Devices(props: any) {
 						<p className="flex flex-row items-center gap-2 mt-1 text-xl font-extrabold sm:text-2xl sm:tracking-tight ">
 							<ScrollText /> {device.type}
 						</p>
+						<p className="mt-2 text-base font-semibold">
+							{'"' + device.reference + '"'}
+						</p>
 						<p className="mt-2 text-base ">{device.description}</p>
 					</div>
 				))}

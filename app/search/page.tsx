@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import { z } from "zod";
@@ -252,17 +253,29 @@ export default function Search() {
 										)}
 									</div>
 								</div>
-
-								<Button
-									variant="outline"
-									className="h-12 ml-1 my-auto hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
+								<Link
+									href={{
+										pathname: "/summary",
+										query: {
+											title: doc.title,
+											author: doc.author_name[0],
+											year: doc.first_publish_year,
+											pages: doc.number_of_pages_median,
+											subjects: doc.subject,
+										},
+									}}
 								>
-									{j === 0 ? (
-										<CheckCheck className="w-4 h-4" />
-									) : (
-										<Check className="w-4 h-4" />
-									)}
-								</Button>
+									<Button
+										variant="outline"
+										className="h-12 ml-1 my-auto hover:bg-orange-500 hover:text-white dark:hover:bg-sky-500"
+									>
+										{j === 0 ? (
+											<CheckCheck className="w-4 h-4" />
+										) : (
+											<Check className="w-4 h-4" />
+										)}
+									</Button>
+								</Link>
 							</div>
 
 							<Separator className="my-4" />

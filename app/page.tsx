@@ -20,40 +20,6 @@ const state = observable({ message: "" });
 
 export default function Home() {
 	const [search, setSearch] = useState("");
-	const message = useSelector(() => state.message.get());
-
-	const generate = async () => {
-		const response = await fetch("/api/queryLLM", {
-			method: "POST",
-			body: JSON.stringify({ input: "computers" }),
-		});
-
-		const stream = response.body;
-
-		if (!stream) {
-			return console.error("Could not access stream");
-		}
-
-		const reader = stream.getReader();
-
-		try {
-			const decoder = new TextDecoder();
-
-			while (true) {
-				const { done, value } = await reader.read();
-
-				if (done) {
-					break;
-				}
-
-				state.message.set((prev) => prev + decoder.decode(value));
-			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			reader.releaseLock();
-		}
-	};
 
 	return (
 		<>
@@ -85,7 +51,7 @@ export default function Home() {
 									query: { search: search },
 								}}
 							>
-								<Button type="submit" onClick={generate}>
+								<Button type="submit">
 									<Search className="w-5 h-5" />
 								</Button>
 							</Link>
