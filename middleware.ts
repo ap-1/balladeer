@@ -3,7 +3,6 @@ import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
 	publicRoutes: [
-		"/api/queryLLM",
 		...pages.reduce((acc, page) => {
 			if (!page.protected) {
 				acc.push(page.href);

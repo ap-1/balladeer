@@ -9,7 +9,7 @@ export const env = createEnv({
 		COHERE_API_KEY: z.string().min(1),
 		HUGGINGFACEHUB_API_KEY: z.string().min(1),
 
-		UPSTASH_REDIS_URL: z.string().url(),
+		REDIS_URL: z.string().url(),
 		UPSTASH_REDIS_REST_URL: z.string().url(),
 		UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
 
@@ -18,19 +18,5 @@ export const env = createEnv({
 	client: {
 		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
 	},
-	runtimeEnv: {
-		DATABASE_URL: process.env.DATABASE_URL,
-
-		OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-		COHERE_API_KEY: process.env.COHERE_API_KEY,
-		HUGGINGFACEHUB_API_KEY: process.env.HUGGINGFACEHUB_API_KEY,
-
-		UPSTASH_REDIS_URL: process.env.UPSTASH_REDIS_URL,
-		UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-		UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-
-		CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
-			process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-	},
+	runtimeEnv: process.env,
 });
